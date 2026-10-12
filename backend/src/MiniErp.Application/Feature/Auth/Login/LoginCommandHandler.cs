@@ -1,6 +1,7 @@
-using System.Security.Authentication;
+// using System.Security.Authentication;
 using MediatR;
 using MiniErp.Application.Common.Interface;
+using MiniErp.Application.Common.Exceptions;
 
 namespace MiniErp.Application.Feature.Auth.Login;
 
@@ -29,7 +30,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResult>
             || !user.IsActive
             || !_passwordHasher.Verify(user.PasswordHash, request.Password))
         {
-            throw new InvalidCredentialException();
+            throw new InvalidCredentialsException();
         }
 
         var token = _jwtTokenGenerator.Generate(user);

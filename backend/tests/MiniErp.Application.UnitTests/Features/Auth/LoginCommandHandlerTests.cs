@@ -1,4 +1,5 @@
-using System.Security.Authentication;
+// using System.Security.Authentication;
+using MiniErp.Application.Common.Exceptions;
 using MiniErp.Application.Common.Interface;
 using MiniErp.Application.Feature.Auth.Login;
 using MiniErp.Domain.Entities;
@@ -44,7 +45,7 @@ public class LoginCommandHandlerTests
         _users.GetByEmailAsync("a@b.com", Arg.Any<CancellationToken>()).Returns(user);
         _hasher.Verify("hash", "salah").Returns(false);
 
-        await Assert.ThrowsAsync<InvalidCredentialException>(
+        await Assert.ThrowsAsync<InvalidCredentialsException>(
             () => _sut.Handle(new LoginCommand("a@b.com", "salah"), CancellationToken.None));
     }
 
@@ -53,7 +54,7 @@ public class LoginCommandHandlerTests
     {
         _users.GetByEmailAsync("x@y.com", Arg.Any<CancellationToken>()).Returns((User?)null);
 
-        await Assert.ThrowsAsync<InvalidCredentialException>(
+        await Assert.ThrowsAsync<InvalidCredentialsException>(
             () => _sut.Handle(new LoginCommand("x@y.com", "apa-saja"), CancellationToken.None)
         );
     }
@@ -67,7 +68,7 @@ public class LoginCommandHandlerTests
         _users.GetByEmailAsync("a@b.com", Arg.Any<CancellationToken>()).Returns(user);
         _hasher.Verify("hash", "secret123").Returns(true);
 
-        await Assert.ThrowsAsync<InvalidCredentialException>(
+        await Assert.ThrowsAsync<InvalidCredentialsException>(
             () => _sut.Handle(new LoginCommand("a@b.com", "secret123"), CancellationToken.None)
         );
     }
