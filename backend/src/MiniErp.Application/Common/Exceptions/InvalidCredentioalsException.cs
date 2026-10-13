@@ -1,8 +1,8 @@
 namespace MiniErp.Application.Common.Exceptions;
 
-public class InvalidCredentialsExceptions : Exception
+public class InvalidCredentialsException : Exception
 {
-    public InvalidCredentialsExceptions()
+    public InvalidCredentialsException()
         : base("Email atau password salah.")
     {
         
