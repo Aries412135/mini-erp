@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using MiniErp.Application.Common.Interface;
 using MiniErp.Domain.Entities;
 
 namespace MiniErp.Infrastructure.Persistence;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : DbContext, IUnitOfWork
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
