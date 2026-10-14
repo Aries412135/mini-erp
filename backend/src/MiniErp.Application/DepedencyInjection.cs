@@ -2,6 +2,7 @@ using System.Reflection;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using MiniErp.Application.Common.Behaviors;
+using MiniErp.Application.Feature.Auth;
 
 namespace MiniErp.Application;
 
@@ -17,6 +18,8 @@ public static class DepedencyInjection
             cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
         });
         service.AddValidatorsFromAssembly(assembly);
+
+        service.AddScoped<RefreshTokenIssuer>();
 
         return service;
     }
