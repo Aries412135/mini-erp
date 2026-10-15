@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using MiniErp.Application.Common.Security;
 using MiniErp.Application.Feature.Auth.Login;
+using MiniErp.Application.Feature.Auth.Logout;
 using MiniErp.Application.Feature.Auth.Refresh;
 
 namespace MiniErp.Api.Controllers;
@@ -52,6 +53,18 @@ public class AuthController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPost("logout")]
+    [AllowAnonymous]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Logout(
+        LogoutRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _sender.Send(new LogoutCommand(request.RefreshToken), cancellationToken);
+        return NoContent();
+    }
+
     [HttpGet("me")]
     [Authorize]
     public IActionResult Me()
@@ -68,3 +81,4 @@ public class AuthController : ControllerBase
 
 public record LoginRequest(string Email, string Password);
 public record RefreshRequest(string RefreshToken);
+public record LogoutRequest(string RefreshToken);
