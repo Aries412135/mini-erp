@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using MiniErp.Application.Common.Security;
 using MiniErp.Application.Feature.Auth.Login;
+using MiniErp.Application.Feature.Auth.Refresh;
 
 namespace MiniErp.Api.Controllers;
 
@@ -35,6 +36,22 @@ public class AuthController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPost("refresh")]
+    [AllowAnonymous]
+    [ProducesResponseType(typeof(AuthTokenResult), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult<AuthTokenResult>> Refresh(
+        RefreshRequest request,
+        CancellationToken cancellationToken)
+    {
+        var result = await _sender.Send(
+            new RefreshTokenCommand(request.RefreshToken),
+            cancellationToken);
+
+        return Ok(result);
+    }
+
     [HttpGet("me")]
     [Authorize]
     public IActionResult Me()
@@ -50,3 +67,4 @@ public class AuthController : ControllerBase
 }
 
 public record LoginRequest(string Email, string Password);
+public record RefreshRequest(string RefreshToken);

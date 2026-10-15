@@ -37,6 +37,13 @@ public class GlobalExceptionHandler: IExceptionHandler
                 Title = "Autentikasi gagal.",
                 Detail = exception.Message
             },
+
+            InvalidRefreshTokenException => new ProblemDetails
+            {
+                Status = StatusCodes.Status401Unauthorized,
+                Title = "Autentikasi gagal.",
+                Detail = exception.Message
+            },
             
             _ => new ProblemDetails
             {
