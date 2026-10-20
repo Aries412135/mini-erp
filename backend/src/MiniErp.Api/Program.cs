@@ -2,7 +2,9 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using MiniErp.Api.Middleware;
+using MiniErp.Api.Services;
 using MiniErp.Application;
+using MiniErp.Application.Common.Interface;
 using MiniErp.Application.Common.Security;
 using MiniErp.Infrastructure;
 using MiniErp.Infrastructure.Authentication;
@@ -59,6 +61,8 @@ builder.Services
        });
 
 builder.Services.AddAuthorization();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 
 var app = builder.Build();
 

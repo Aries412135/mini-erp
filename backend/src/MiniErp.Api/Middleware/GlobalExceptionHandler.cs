@@ -44,6 +44,20 @@ public class GlobalExceptionHandler: IExceptionHandler
                 Title = "Autentikasi gagal.",
                 Detail = exception.Message
             },
+
+            NotFoundException => new ProblemDetails
+            {
+                Status = StatusCodes.Status404NotFound,
+                Title = "Data tidak ditemukan.",
+                Detail = exception.Message
+            },
+
+            ConflictException => new ProblemDetails
+            {
+                Status = StatusCodes.Status409Conflict,
+                Title = "Konflik.",
+                Detail = exception.Message
+            },
             
             _ => new ProblemDetails
             {
