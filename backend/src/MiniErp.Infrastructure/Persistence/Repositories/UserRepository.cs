@@ -29,4 +29,11 @@ public class UserRepository : IUserRepository
                 .ThenInclude(ur => ur.Role)
             .FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
     }
+
+    public Task<User?> GetByIdForUpdateAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return _db.Users
+            .Include(u => u.UserRoles)
+            .FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+    }
 }

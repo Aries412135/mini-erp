@@ -36,5 +36,21 @@ public class User
         UserRoles.Add(new UserRole(Id, roleId));
     }
 
+    public void ReplaceRoles(IEnumerable<int> roleIds)
+    {
+        var wanted = roleIds.Distinct().ToHashSet();
+
+        var toRemove = UserRoles.Where(ur => !wanted.Contains(ur.RoleId)).ToList();
+        foreach (var userRole in toRemove)
+        {
+            UserRoles.Remove(userRole);
+        }
+
+        foreach (var roleId in wanted)
+        {
+            AssignRole(roleId);
+        }
+    }
+
     public void Deactivate() => IsActive = false;
 }
