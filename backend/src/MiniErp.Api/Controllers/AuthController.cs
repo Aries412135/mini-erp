@@ -79,23 +79,6 @@ public class AuthController : ControllerBase
             roles = User.FindAll(AppClaims.Role).Select(c => c.Value)
         });
     }
-
-    [HttpGet("ping")]
-    public IActionResult Ping() => Ok("pong");
-
-    // [HttpGet("authz-debug")]
-    // public async Task<IActionResult> AuthzDebug([FromServices] IAuthorizationService authorization)
-    // {
-    //     var result = await authorization.AuthorizeAsync(User, Policies.ManageUsers);
-
-    //     return Ok(new
-    //     {
-    //         policySucceed = result.Succeeded,
-    //         failedRequirements = result.Failure?.FailedRequirements.Select(r => r.ToString()),
-    //         adminConstant = $"[{RoleNames.Admin}]",
-    //         isInAdminContantRole = User.IsInRole(RoleNames.Admin)
-    //     });
-    // }
 }
 
 public record LoginRequest(string Email, string Password);

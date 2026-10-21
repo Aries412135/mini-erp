@@ -124,14 +124,4 @@ public class AuthorizationTests : IClassFixture<ApiFactory>
         await _factory.Sender.Received(1)
             .Send(Arg.Any<SetUserRolesCommand>(), Arg.Any<CancellationToken>());
     }
-
-    // [Fact]
-    // public async Task Debug_Authz()
-    // {
-    //     var token = TestTokens.Create(new[] {"Admin"});
-
-    //     var response = await CreateClient(token).GetAsync("/api/auth/authz-debug");
-
-    //     Assert.Fail(await response.Content.ReadAsStringAsync());
-    // }
 }
