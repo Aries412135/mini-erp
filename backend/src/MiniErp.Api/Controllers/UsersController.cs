@@ -1,14 +1,15 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MiniErp.Api.Security;
 using MiniErp.Application.Feature.Users.SetUserRoles;
-using MiniErp.Domain.Constants;
+// using MiniErp.Domain.Constants;
 
 namespace MiniErp.Api.Controllers;
 
 [ApiController]
 [Route("api/users")]
-[Authorize(Roles = RoleNames.Admin)]
+[Authorize(Policy = Policies.ManageUsers)]
 public class UsersController: ControllerBase
 {
     private readonly ISender _sender;
