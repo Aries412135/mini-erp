@@ -1,11 +1,14 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using MiniErp.Api.Middleware;
+using MiniErp.Api.Security;
 using MiniErp.Api.Services;
 using MiniErp.Application;
 using MiniErp.Application.Common.Interface;
 using MiniErp.Application.Common.Security;
+using MiniErp.Domain.Constants;
 using MiniErp.Infrastructure;
 using MiniErp.Infrastructure.Authentication;
 using MiniErp.Infrastructure.Persistence;
@@ -60,7 +63,13 @@ builder.Services
            };
        });
 
-builder.Services.AddAuthorization();
+// builder.Services.AddAuthorization();
+builder.Services.AddAuthorizationBuilder()
+    .SetFallbackPolicy(new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build())
+    .AddPolicy(Policies.ManageUsers, policy => policy.RequireRole(RoleNames.Admin));
+builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, ProblemDetailsAuthorizationResultHandler>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 
@@ -79,3 +88,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
