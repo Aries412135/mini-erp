@@ -47,7 +47,7 @@ export function LoginForm() {
                 aria-invalid={errors.email ? true : undefined}
                 {...register('email')}
             />
-            {errors.email && <span className="field-error">{errors.email.message}</span>}
+            {errors.email && <span className={fieldErrorClass}>{errors.email.message}</span>}
 
             <label htmlFor="password" className={labelClass}>Password</label>
             <input
