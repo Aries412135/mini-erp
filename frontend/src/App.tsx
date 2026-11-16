@@ -6,3 +6,5 @@ function App() {
 }
 
 export default App;
+
+{/* <h1 className="text-3xl font-bold text-blue-700">Tailwind jalan</h1> */}
