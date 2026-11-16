@@ -7,16 +7,16 @@ export function DashboardPage() {
 
     if (!user) {
         return (
-            <main className="page">
-                <p>Anda belum login.</p>
-                <Link to="/login"></Link>
+            <main className="mx-auto mt-12 max-w-xl px-4">
+                <p className="text-slate-700">Anda belum login.</p>
+                <Link to="/login" className="text-blue-600 underline"></Link>
             </main>
         );
     }
 
     return (
-        <main className="page">
-            <h1>Dashboard</h1>
+        <main className="mx-auto mt-12 max-w-xl space-y-1 px-4">
+            <h1 className="mb-3 text-2xl font-bold text-slate-900">Dashboard</h1>
             <p>Halo, {user.name}</p>
             <p>Email: {user.email}</p>
             <p>Role: {user.roles.length > 0 ? user.roles.join(', ') : '(Belum ada role)'}</p>
